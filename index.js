@@ -4,15 +4,15 @@ const app = express();
 const port = 8000;
 const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
-//use for session cookie
- const session = require('express-session');
+// used for session cookie
+const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
-const  MongoStore = require('connect-mongo');
+const MongoStore = require('connect-mongo');
 
 app.use(express.urlencoded());
 
-//app.use(cookieParser());
+app.use(cookieParser());
 
 app.use(express.static('./assets'));
 
@@ -22,30 +22,37 @@ app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 
 
+
+
 // set up the view engine
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-//mongo store is used to store the session cookie in the db
+// mongo store is used to store the session cookie in the db
 app.use(session({
     name: 'codeial',
-    //todo change the secret before development in production mode
+    // TODO change the secret before deployment in production mode
+    // this secret key is tokeizing the cookie that  is passed through the passport.serializeUser
     secret: 'blah',
+    // saveUnitialized means do we want to accept the data also when user is not signed in
     saveUninitialized: false,
+    // resave means do we want to save again and again the session cookie
     resave: false,
     cookie: {
         maxAge: (1000 * 60 * 100)
-    }
-    // store: new MongoStore(
-    //     {
-    //         mongooseConnection: db,
-    //         autoRemove: 'disabled'
-    //     },
-    //     function (err) {
-    //         console.log(err || 'connect-mongodb setup ok');
-    //     }
-    // )
- }));
+    },
+    // mongo store is used to store the session cookie in the db
+    store: MongoStore.create(
+        {
+            mongoUrl: 'mongodb://localhost/codeial_development',
+            autoRemove: 'disabled',
+
+        },
+        function (err) {
+            console.log(err || 'connect-mongodb setup ok');
+        }
+    )
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -54,7 +61,7 @@ app.use(passport.setAuthenticatedUser);
 
 // use express router
 app.use('/', require('./routes'));
- 
+
 
 app.listen(port, function (err) {
     if (err) {
