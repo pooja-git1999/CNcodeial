@@ -1,5 +1,5 @@
 const { default: mongoose } = require('mongoose');
-const moongoose = require('mongoose');
+//const moongoose = require('mongoose');
 const postSchema = new mongoose.Schema({
     content: {
         type: String,
