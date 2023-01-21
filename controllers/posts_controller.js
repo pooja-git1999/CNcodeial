@@ -17,9 +17,9 @@ module.exports.destory = function (req, res) {
         if (post.user == req.user.id) {
             post.remove();
             Comment.deleteMany({ post: req.params.id }, function (err) {
-                
-                    return res.redirect('back');
-                
+
+                return res.redirect('back');
+
             });
         } else {
             return res.redirect('back');
