@@ -4,14 +4,18 @@
     <title>
         <%= title %>
     </title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css" integrity="sha512-NXUhxhkDgZYOMjaIgd89zF2w51Mub53Ru3zCNp5LTlEzMbN
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css" integrity="sha512-NXUhxhkDgZYOMjaIgd89zF2w51Mub53Ru3zCNp5LTlEzMbN
 NAjTjDbpURYGS5Mop2cU4b7re1nOIucsVlrx9fA==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"
         integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q=="
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/footer.css">
+
     <%- style %>
 
 </head>
@@ -23,20 +27,22 @@ NAjTjDbpURYGS5Mop2cU4b7re1nOIucsVlrx9fA==" crossorigin="anonymous" />
                 <%= flash.success %>
             </h5>
             <% } %> -->
-                <main id="body-style">
-                    <%- body %>
-                </main>
+        <main id="body-style">
+            <%- body %>
+        </main>
 
-                <%- include('_footer'); %>
+        <%- include('_footer'); %>
 
-                    <%- script %>
-                        <script>
+            <%- script %>
+                <script>
+
   <% if (flash.success && flash.success.length > 0) { %>
+
                         new Noty({
                             theme: 'relax',
                             text: "<%= flash.success %>",
                             type: 'success',
-                            layout: 'toRight',
+                            layout: 'topRight',
                             timeout: 1500
                         }).show();
   <% } %>
@@ -45,12 +51,12 @@ NAjTjDbpURYGS5Mop2cU4b7re1nOIucsVlrx9fA==" crossorigin="anonymous" />
                             theme: 'relax',
                             text: "<%= flash.error %>",
                             type: 'error',
-                            layout: 'toRight',
+                            layout: 'topRight',
                             timeout: 1500
                         }).show();
   <% } %>
 
-                        </script>
+                </script>
 </body>
 
 </html>
